@@ -29,6 +29,8 @@ type AuthorizationPolicy struct {
 // AuthPolicyStatus represents the types required to be in
 // the status for an authorization policy
 type AuthPolicyStatus struct {
+	SendBody bool `json:"send_body,omitempty"`
+
 	Address *duckv1.Addressable `json:"address,omitempty"`
 
 	// This may need to be restricted to a single container
