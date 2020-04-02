@@ -21,7 +21,6 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"go.uber.org/zap"
 	apixv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -117,13 +116,6 @@ func (r *reconciler) convert(
 	in := inZygote.DeepCopyObject().(ConvertibleObject)
 	hub := hubZygote.DeepCopyObject().(ConvertibleObject)
 	out := outZygote.DeepCopyObject().(ConvertibleObject)
-
-	hubGVK := inGVK.GroupKind().WithVersion(conv.HubVersion)
-	logger = logger.With(
-		zap.String("inputType", formatGVK(inGVK)),
-		zap.String("outputType", formatGVK(outGVK)),
-		zap.String("hubType", formatGVK(hubGVK)),
-	)
 
 	// TODO(dprotaso) - potentially error on unknown fields
 	if err = json.Unmarshal(inRaw.Raw, &in); err != nil {
